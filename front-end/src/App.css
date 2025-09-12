@@ -1,0 +1,161 @@
+/* Global App styles */
+.App {
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecf3 100%);
+  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+  box-sizing: border-box;
+  overflow: auto;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+  margin-bottom: 24px;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background: #f8fafc;
+  box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.12), 0 1.5px 4px 0 rgba(44,62,80,0.04);
+  border-radius: 28px;
+  padding: 38px 30px 30px 30px;
+  width: 100%;
+  max-width: 370px;
+  min-width: 300px;
+  min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.18rem;
+  color: #222b45;
+  margin: 0 auto;
+  gap: 18px;
+  border: 1.5px solid #e3e7ef;
+  text-align: center;
+}
+
+.App-link {
+  color: #1976d2;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.App-link:hover {
+  color: #0d47a1;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Card title styling */
+.App-header h1, .App-header h2, .App-header h3 {
+  text-align: center;
+  font-weight: 500;
+  font-size: 2rem;
+  margin-bottom: 18px;
+  color: #222b45;
+  letter-spacing: 0.5px;
+}
+
+/* Professional form styling */
+form {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+}
+
+input, select, textarea, button {
+  font-family: inherit;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+input, select, textarea {
+  padding: 12px 14px;
+  border: 1.5px solid #dbe3ef;
+  border-radius: 10px;
+  background: #fff;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-size: 1.08rem;
+  box-shadow: 0 1px 2px 0 rgba(44,62,80,0.03);
+  text-align: center;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #1976d2;
+  outline: none;
+  box-shadow: 0 0 0 2px #e3f0fd;
+}
+
+button {
+  background: linear-gradient(90deg, #2196f3 0%, #1976d2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 13px 0;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+  width: 100%;
+  max-width: 100%;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+  margin-top: 0;
+  min-height: 46px;
+  display: block;
+  font-size: 1.13rem;
+  letter-spacing: 0.5px;
+}
+
+button:hover {
+  background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
+}
+
+/* Utility: center text for error/info */
+.center-text {
+  text-align: center;
+}
+
+label {
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 4px;
+  font-size: 1.04rem;
+  text-align: center;
+  width: 100%;
+}
+
+.error {
+  color: #d32f2f;
+  font-size: 0.95em;
+  margin-top: -10px;
+  margin-bottom: 8px;
+}
