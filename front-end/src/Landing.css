@@ -1,4 +1,4 @@
-/* Landing page specific styles */
+/* Landing page specific styles - Blue Trust Theme */
 .landing-card {
   padding: 38px 30px 30px 30px;
   max-width: 400px;
@@ -13,16 +13,18 @@
 
 .landing-title {
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 10px;
   text-align: center;
+  color: #1E3A8A;
 }
 
 .landing-tagline {
-  color: #555;
+  color: #6B7280;
   font-size: 1.1rem;
   margin-bottom: 28px;
   text-align: center;
+  line-height: 1.4;
 }
 
 .landing-buttons {
@@ -42,14 +44,31 @@
   border-radius: 10px;
   font-size: 1.13rem;
   font-weight: 600;
-  background: linear-gradient(90deg, #2196f3 0%, #1976d2 100%);
+  background: linear-gradient(90deg, #1E3A8A 0%, #3B82F6 100%);
   color: #fff;
   border: none;
-  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+  box-shadow: 0 3px 10px rgba(30, 58, 138, 0.15);
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  letter-spacing: 0.3px;
 }
 
 .landing-btn:hover {
-  background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
+  background: linear-gradient(90deg, #1E3A8A 0%, #1E40AF 100%);
+  box-shadow: 0 6px 16px rgba(30, 58, 138, 0.25);
+  transform: translateY(-1px);
+}
+
+.landing-btn.secondary {
+  background: #ffffff;
+  color: #1E3A8A;
+  border: 2px solid #3B82F6;
+  box-shadow: 0 2px 6px rgba(59, 130, 246, 0.08);
+}
+
+.landing-btn.secondary:hover {
+  background: #F8FAFC;
+  border-color: #1E3A8A;
+  color: #1E3A8A;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.15);
 }

@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Signup from "./signup";
 import Login from "./Login";
 import Home from "./Home";
+import ProviderDashboard from "./components/ProviderDashboard";
+import CustomerSearch from "./components/CustomerSearch";
 import "./App.css";
 import "./Landing.css";
 
@@ -33,6 +35,8 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
+        <Route path="/provider-dashboard" element={<ProviderDashboard />} />
+        <Route path="/customer-search" element={<CustomerSearch />} />
       </Routes>
     </Router>
   );

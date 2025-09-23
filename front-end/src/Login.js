@@ -3,19 +3,38 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    const storedUser = JSON.parse(localStorage.getItem("user"));
 
-    if (storedUser && storedUser.email === email && storedUser.password === password) {
-      navigate("/home");
-    } else {
-      setError("Invalid email or password!");
+    try {
+      const response = await fetch("http://localhost:5000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: emailOrUsername,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        // Store user info in localStorage for session management
+        localStorage.setItem("user", JSON.stringify(data.user));
+        navigate("/home");
+      } else {
+        setError(data.message);
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setError("Network error. Please try again.");
     }
   };
 
@@ -25,12 +44,12 @@ const Login = () => {
         <h2>Login</h2>
         {error && <p className="error">{error}</p>}
 
-        <label>Email</label>
+        <label>Username or Email</label>
         <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          type="text"
+          placeholder="Enter your username or email"
+          value={emailOrUsername}
+          onChange={(e) => setEmailOrUsername(e.target.value)}
           required
         />
 

@@ -1,17 +1,17 @@
-/* Login component styles */
+/* Login component styles - Blue Trust Theme */
 .form-container {
   min-height: 100vh;
   min-width: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e9ecf3 100%);
+  background: linear-gradient(135deg, #F5F6F7 0%, #e5e7eb 100%);
   box-sizing: border-box;
 }
 
 .form-box {
-  background: #f8fafc;
-  box-shadow: 0 8px 32px 0 rgba(44, 62, 80, 0.12), 0 1.5px 4px 0 rgba(44,62,80,0.04);
+  background: #ffffff;
+  box-shadow: 0 8px 32px 0 rgba(30, 58, 138, 0.12), 0 1.5px 4px 0 rgba(30, 58, 138, 0.04);
   border-radius: 28px;
   padding: 38px 30px 30px 30px;
   width: 100%;
@@ -22,10 +22,10 @@
   align-items: center;
   justify-content: center;
   font-size: 1.18rem;
-  color: #222b45;
+  color: #1F2937;
   margin: 0 auto;
   gap: 18px;
-  border: 1.5px solid #e3e7ef;
+  border: 1.5px solid #D1D5DB;
   text-align: center;
 }
 
@@ -38,26 +38,33 @@
   width: 100%;
 }
 
+.form-box h2 {
+  color: #1E3A8A;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
 .form-box input {
   margin-bottom: 8px;
   padding: 12px 14px;
-  border: 1.5px solid #dbe3ef;
+  border: 1.5px solid #D1D5DB;
   border-radius: 10px;
   background: #fff;
   transition: border-color 0.2s, box-shadow 0.2s;
   font-size: 1.08rem;
-  box-shadow: 0 1px 2px 0 rgba(44,62,80,0.03);
+  box-shadow: 0 1px 2px 0 rgba(30, 58, 138, 0.03);
   text-align: center;
+  color: #1F2937;
 }
 
 .form-box input:focus {
-  border-color: #1976d2;
+  border-color: #1E3A8A;
   outline: none;
-  box-shadow: 0 0 0 2px #e3f0fd;
+  box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1);
 }
 
 .form-box button {
-  background: linear-gradient(90deg, #2196f3 0%, #1976d2 100%);
+  background: linear-gradient(90deg, #1E3A8A 0%, #3B82F6 100%);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -65,26 +72,48 @@
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.10);
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.15);
   width: 100%;
   font-size: 1.13rem;
   letter-spacing: 0.5px;
 }
 
 .form-box button:hover {
-  background: linear-gradient(90deg, #1976d2 0%, #2196f3 100%);
+  background: linear-gradient(90deg, #1E3A8A 0%, #1E40AF 100%);
+  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
 }
 
 .form-box label {
   font-weight: 500;
-  color: #374151;
+  color: #1F2937;
   margin-bottom: 4px;
   font-size: 1.04rem;
 }
 
+.form-box p {
+  color: #6B7280;
+  font-size: 0.95rem;
+}
+
+.form-box p a {
+  color: #3B82F6;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.form-box p a:hover {
+  color: #1E3A8A;
+  text-decoration: underline;
+}
+
 .error {
-  color: #d32f2f;
+  color: #dc2626;
   font-size: 0.95em;
   margin-top: -10px;
   margin-bottom: 8px;
+  padding: 8px 12px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 6px;
 }
