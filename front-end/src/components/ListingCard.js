@@ -4,6 +4,7 @@
  */
 
 import React, { useState } from 'react';
+import { MapPin, Clock, Edit, Trash2, Phone } from 'lucide-react';
 import './ListingCard.css';
 
 const ListingCard = ({ 
@@ -149,9 +150,7 @@ const ListingCard = ({
 
         {/* Location */}
         <div className="listing-location">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-          </svg>
+          <MapPin size={16} />
           {listing.location_city}, {listing.location_zip}
         </div>
 
@@ -177,9 +176,7 @@ const ListingCard = ({
 
         {/* Availability */}
         <div className="listing-availability">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M16.2,16.2L11,13V7H12.5V12.2L17,14.4L16.2,16.2Z"/>
-          </svg>
+          <Clock size={16} />
           {formatAvailability(listing.availability)}
         </div>
 
@@ -215,9 +212,7 @@ const ListingCard = ({
                 onClick={() => onEdit(listing)}
                 title="Edit listing"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
-                </svg>
+                <Edit size={16} />
                 Edit
               </button>
               <button 
@@ -225,9 +220,7 @@ const ListingCard = ({
                 onClick={handleDelete}
                 title="Delete listing"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
-                </svg>
+                <Trash2 size={16} />
                 Delete
               </button>
             </div>
@@ -238,9 +231,7 @@ const ListingCard = ({
                 className="btn-contact"
                 onClick={() => onContact(listing)}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-                </svg>
+                <Phone size={16} />
                 Contact Provider
               </button>
             </div>

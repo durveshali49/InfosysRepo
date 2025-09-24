@@ -5,7 +5,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #F5F6F7 0%, #e5e7eb 100%);
+  background: #ffffff;
   box-sizing: border-box;
 }
 
@@ -52,13 +52,13 @@
 }
 
 .form-box input:focus {
-  border-color: #1E3A8A;
+  border-color: #2563eb;
   outline: none;
-  box-shadow: 0 0 0 2px rgba(30, 58, 138, 0.1);
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
 .form-box button {
-  background: linear-gradient(90deg, #1E3A8A 0%, #3B82F6 100%);
+  background: #2563eb;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -66,15 +66,15 @@
   font-weight: 600;
   cursor: pointer;
   transition: background 0.2s, box-shadow 0.2s;
-  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.15);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.15);
   width: 100%;
   font-size: 1.13rem;
   letter-spacing: 0.5px;
 }
 
 .form-box button:hover {
-  background: linear-gradient(90deg, #1E3A8A 0%, #1E40AF 100%);
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
+  background: #1d4ed8;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
 .form-box label {
@@ -108,17 +108,17 @@
 }
 
 .role-buttons button:hover {
-  border-color: #3B82F6;
-  color: #1E3A8A;
+  border-color: #2563eb;
+  color: #000000;
   background: #F8FAFC;
-  box-shadow: 0 3px 8px rgba(59, 130, 246, 0.12);
+  box-shadow: 0 3px 8px rgba(37, 99, 235, 0.12);
 }
 
 .role-buttons button.active {
-  background: #1E3A8A;
-  border-color: #1E3A8A;
+  background: #2563eb;
+  border-color: #2563eb;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(30, 58, 138, 0.25);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
   transform: scale(1.02);
 }
 
@@ -152,8 +152,8 @@
 
 .role-buttons button:focus {
   outline: none;
-  border-color: #3B82F6;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .error {

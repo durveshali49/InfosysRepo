@@ -200,9 +200,10 @@ const ListingForm = ({ listing, onSubmit, isSubmitting }) => {
         {/* Basic Information */}
         <div className="form-section">
           <h3>Basic Information</h3>
+          <p className="section-description">Provide the essential details about your service</p>
           
           <div className="form-group">
-            <label htmlFor="service_name">Service Name *</label>
+            <label htmlFor="service_name" className="required">Service Name</label>
             <input
               type="text"
               id="service_name"
@@ -229,84 +230,82 @@ const ListingForm = ({ listing, onSubmit, isSubmitting }) => {
             />
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="category">Category *</label>
-              <select
-                id="category"
-                name="category"
-                value={formData.category}
-                onChange={handleInputChange}
-                className={errors.category ? 'error' : ''}
-                disabled={isSubmitting}
-              >
-                <option value="">Select a category</option>
-                {categories.map(cat => (
-                  <option key={cat} value={cat}>{cat}</option>
-                ))}
-              </select>
-              {errors.category && <span className="error-text">{errors.category}</span>}
-            </div>
+          <div className="form-group">
+            <label htmlFor="category" className="required">Category</label>
+            <select
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleInputChange}
+              className={errors.category ? 'error' : ''}
+              disabled={isSubmitting}
+            >
+              <option value="">Select a category</option>
+              {categories.map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </select>
+            {errors.category && <span className="error-text">{errors.category}</span>}
+          </div>
 
-            <div className="form-group">
-              <label htmlFor="price">Price ($) *</label>
-              <input
-                type="number"
-                id="price"
-                name="price"
-                value={formData.price}
-                onChange={handleInputChange}
-                placeholder="0.00"
-                min="0"
-                step="0.01"
-                className={errors.price ? 'error' : ''}
-                disabled={isSubmitting}
-              />
-              {errors.price && <span className="error-text">{errors.price}</span>}
-            </div>
+          <div className="form-group">
+            <label htmlFor="price" className="required">Price ($)</label>
+            <input
+              type="number"
+              id="price"
+              name="price"
+              value={formData.price}
+              onChange={handleInputChange}
+              placeholder="0.00"
+              min="0"
+              step="0.01"
+              className={errors.price ? 'error' : ''}
+              disabled={isSubmitting}
+            />
+            {errors.price && <span className="error-text">{errors.price}</span>}
           </div>
         </div>
 
         {/* Location */}
         <div className="form-section">
           <h3>Location</h3>
+          <p className="section-description">Specify where you provide your services</p>
           
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="location_city">City *</label>
-              <input
-                type="text"
-                id="location_city"
-                name="location_city"
-                value={formData.location_city}
-                onChange={handleInputChange}
-                placeholder="e.g., New York"
-                className={errors.location_city ? 'error' : ''}
-                disabled={isSubmitting}
-              />
-              {errors.location_city && <span className="error-text">{errors.location_city}</span>}
-            </div>
+          <div className="form-group">
+            <label htmlFor="location_city" className="required">City</label>
+            <input
+              type="text"
+              id="location_city"
+              name="location_city"
+              value={formData.location_city}
+              onChange={handleInputChange}
+              placeholder="e.g., New York"
+              className={errors.location_city ? 'error' : ''}
+              disabled={isSubmitting}
+            />
+            {errors.location_city && <span className="error-text">{errors.location_city}</span>}
+          </div>
 
-            <div className="form-group">
-              <label htmlFor="location_zip">ZIP Code *</label>
-              <input
-                type="text"
-                id="location_zip"
-                name="location_zip"
-                value={formData.location_zip}
-                onChange={handleInputChange}
-                placeholder="e.g., 10001"
-                className={errors.location_zip ? 'error' : ''}
-                disabled={isSubmitting}
-              />
-              {errors.location_zip && <span className="error-text">{errors.location_zip}</span>}
-            </div>
+          <div className="form-group">
+            <label htmlFor="location_zip" className="required">ZIP Code</label>
+            <input
+              type="text"
+              id="location_zip"
+              name="location_zip"
+              value={formData.location_zip}
+              onChange={handleInputChange}
+              placeholder="e.g., 10001"
+              className={errors.location_zip ? 'error' : ''}
+              disabled={isSubmitting}
+            />
+            {errors.location_zip && <span className="error-text">{errors.location_zip}</span>}
           </div>
         </div>
 
         {/* Availability */}
         <div className="form-section">
           <h3>Availability</h3>
+          <p className="section-description">Set your working schedule and available days</p>
           
           <div className="form-group">
             <label>Available Days</label>
@@ -325,34 +324,32 @@ const ListingForm = ({ listing, onSubmit, isSubmitting }) => {
             </div>
           </div>
 
-          <div className="form-row">
-            <div className="form-group">
-              <label htmlFor="start_time">Start Time</label>
-              <input
-                type="time"
-                id="start_time"
-                value={formData.availability.hours.start}
-                onChange={(e) => handleAvailabilityChange('hours', {
-                  ...formData.availability.hours,
-                  start: e.target.value
-                })}
-                disabled={isSubmitting}
-              />
-            </div>
+          <div className="form-group">
+            <label htmlFor="start_time">Start Time</label>
+            <input
+              type="time"
+              id="start_time"
+              value={formData.availability.hours.start}
+              onChange={(e) => handleAvailabilityChange('hours', {
+                ...formData.availability.hours,
+                start: e.target.value
+              })}
+              disabled={isSubmitting}
+            />
+          </div>
 
-            <div className="form-group">
-              <label htmlFor="end_time">End Time</label>
-              <input
-                type="time"
-                id="end_time"
-                value={formData.availability.hours.end}
-                onChange={(e) => handleAvailabilityChange('hours', {
-                  ...formData.availability.hours,
-                  end: e.target.value
-                })}
-                disabled={isSubmitting}
-              />
-            </div>
+          <div className="form-group">
+            <label htmlFor="end_time">End Time</label>
+            <input
+              type="time"
+              id="end_time"
+              value={formData.availability.hours.end}
+              onChange={(e) => handleAvailabilityChange('hours', {
+                ...formData.availability.hours,
+                end: e.target.value
+              })}
+              disabled={isSubmitting}
+            />
           </div>
 
           <div className="form-group">
@@ -370,7 +367,8 @@ const ListingForm = ({ listing, onSubmit, isSubmitting }) => {
 
         {/* Image */}
         <div className="form-section">
-          <h3>Image (Optional)</h3>
+          <h3>Service Image</h3>
+          <p className="section-description">Add a professional image to showcase your service (optional)</p>
           
           <div className="form-group">
             <label htmlFor="image_url">Image URL</label>
@@ -409,7 +407,7 @@ const ListingForm = ({ listing, onSubmit, isSubmitting }) => {
         <div className="form-actions">
           <button
             type="submit"
-            className="btn-primary"
+            className={`btn btn-primary ${isSubmitting ? 'loading' : ''}`}
             disabled={isSubmitting}
           >
             {isSubmitting 

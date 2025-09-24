@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Home, Search, X, Plus, Clipboard } from 'lucide-react';
 import ListingForm from './ListingForm';
 import ListingCard from './ListingCard';
 import './ProviderDashboard.css';
@@ -205,7 +206,7 @@ const ProviderDashboard = () => {
       <nav className="dashboard-nav">
         <div className="nav-content">
           <div className="nav-brand">
-            <span className="nav-logo">🏠</span>
+            <span className="nav-logo"><Home size={20} /></span>
             <span className="nav-title">Local Services</span>
           </div>
           <div className="nav-actions">
@@ -213,99 +214,102 @@ const ProviderDashboard = () => {
               className="nav-btn secondary"
               onClick={() => navigate('/customer-search')}
             >
-              🔍 Browse Services
+              <Search size={16} /> Browse Services
             </button>
             <button 
               className="nav-btn secondary"
               onClick={() => navigate('/home')}
             >
-              🏠 Home
+              <Home size={16} /> Home
             </button>
             <button 
               className="nav-btn logout"
               onClick={handleLogout}
             >
-              🚪 Logout
+              Logout
             </button>
           </div>
         </div>
       </nav>
 
-      {/* Header */}
-      <div className="dashboard-header">
-        <div className="header-content">
-          <h1>Provider Dashboard</h1>
-          <p>Welcome back, {user.username}! Manage your service listings below.</p>
-        </div>
-        <button 
-          className="btn-primary create-btn"
-          onClick={() => setShowForm(true)}
-          disabled={showForm}
-        >
-          {showForm ? 'Form Open' : '+ Create New Listing'}
-        </button>
-      </div>
-
-      {/* Error Message */}
-      {error && (
-        <div className="error-message">
-          <p>{error}</p>
-          <button onClick={() => setError('')} className="error-close">×</button>
-        </div>
-      )}
-
-      {/* Listing Form */}
-      {showForm && (
-        <div className="form-section">
-          <div className="form-header">
-            <h2>{editingListing ? 'Edit Listing' : 'Create New Listing'}</h2>
-            <button 
-              className="btn-secondary"
-              onClick={handleFormCancel}
-              disabled={isSubmitting}
-            >
-              Cancel
-            </button>
+      {/* Main Content Container */}
+      <div className="dashboard-container">
+        {/* Header */}
+        <div className="dashboard-header">
+          <div className="header-content">
+            <h1>Provider Dashboard</h1>
+            <p>Welcome back, {user.username}! Manage your service listings below.</p>
           </div>
-          <ListingForm
-            listing={editingListing}
-            onSubmit={editingListing ? handleUpdateListing : handleCreateListing}
-            isSubmitting={isSubmitting}
-          />
-        </div>
-      )}
-
-      {/* Listings Grid */}
-      <div className="listings-section">
-        <div className="section-header">
-          <h2>Your Listings ({listings.length})</h2>
+          <button 
+            className="btn-primary create-btn"
+            onClick={() => setShowForm(true)}
+            disabled={showForm}
+          >
+            {showForm ? 'Form Open' : <><Plus size={16} /> Create New Listing</>}
+          </button>
         </div>
 
-        {listings.length === 0 ? (
-          <div className="empty-state">
-            <div className="empty-icon">📋</div>
-            <h3>No listings yet</h3>
-            <p>Create your first service listing to start attracting customers!</p>
-            <button 
-              className="btn-primary"
-              onClick={() => setShowForm(true)}
-            >
-              Create Your First Listing
-            </button>
-          </div>
-        ) : (
-          <div className="listings-grid">
-            {listings.map((listing) => (
-              <ListingCard
-                key={listing.listing_id}
-                listing={listing}
-                onEdit={() => handleEditClick(listing)}
-                onDelete={() => handleDeleteListing(listing.listing_id)}
-                isOwner={true}
-              />
-            ))}
+        {/* Error Message */}
+        {error && (
+          <div className="error-message">
+            <p>{error}</p>
+            <button onClick={() => setError('')} className="error-close"><X size={16} /></button>
           </div>
         )}
+
+        {/* Listing Form */}
+        {showForm && (
+          <div className="form-section">
+            <div className="form-header">
+              <h2>{editingListing ? 'Edit Listing' : 'Create New Listing'}</h2>
+              <button 
+                className="btn-secondary"
+                onClick={handleFormCancel}
+                disabled={isSubmitting}
+              >
+                Cancel
+              </button>
+            </div>
+            <ListingForm
+              listing={editingListing}
+              onSubmit={editingListing ? handleUpdateListing : handleCreateListing}
+              isSubmitting={isSubmitting}
+            />
+          </div>
+        )}
+
+        {/* Listings Grid */}
+        <div className="listings-section">
+          <div className="section-header">
+            <h2>Your Listings ({listings.length})</h2>
+          </div>
+
+          {listings.length === 0 ? (
+            <div className="empty-state">
+              <div className="empty-icon"><Clipboard size={48} /></div>
+              <h3>No listings yet</h3>
+              <p>Create your first service listing to start attracting customers!</p>
+              <button 
+                className="btn-primary"
+                onClick={() => setShowForm(true)}
+              >
+                Create Your First Listing
+              </button>
+            </div>
+          ) : (
+            <div className="listings-grid">
+              {listings.map((listing) => (
+                <ListingCard
+                  key={listing.listing_id}
+                  listing={listing}
+                  onEdit={() => handleEditClick(listing)}
+                  onDelete={() => handleDeleteListing(listing.listing_id)}
+                  isOwner={true}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

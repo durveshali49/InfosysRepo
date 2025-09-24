@@ -5,6 +5,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Home, Search, Filter, X, BarChart3 } from 'lucide-react';
 import ListingCard from './ListingCard';
 import './CustomerSearch.css';
 
@@ -219,7 +220,7 @@ const CustomerSearch = () => {
       <nav className="search-nav">
         <div className="nav-content">
           <div className="nav-brand">
-            <span className="nav-logo">🏠</span>
+            <span className="nav-logo"><Home size={20} /></span>
             <span className="nav-title">Local Services</span>
           </div>
           <div className="nav-actions">
@@ -228,14 +229,14 @@ const CustomerSearch = () => {
                 className="nav-btn secondary"
                 onClick={() => navigate('/provider-dashboard')}
               >
-                📊 My Dashboard
+                <BarChart3 size={16} /> My Dashboard
               </button>
             )}
             <button 
               className="nav-btn secondary"
               onClick={() => navigate('/home')}
             >
-              🏠 Home
+              <Home size={16} /> Home
             </button>
             {user.id && (
               <button 
@@ -261,9 +262,7 @@ const CustomerSearch = () => {
       <div className="search-bar-section">
         <div className="search-bar">
           <div className="search-input-wrapper">
-            <svg className="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
+            <Search className="search-icon" size={20} />
             <input
               type="text"
               placeholder="Search for services, providers, or locations..."
@@ -277,7 +276,7 @@ const CustomerSearch = () => {
                 onClick={() => setSearchQuery('')}
                 aria-label="Clear search"
               >
-                ×
+                <X size={16} />
               </button>
             )}
           </div>
@@ -286,11 +285,9 @@ const CustomerSearch = () => {
             onClick={() => setShowFilters(!showFilters)}
             aria-label="Toggle filters"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M4.25 5.61C6.27 8.2 10 13 10 13v6c0 .55.45 1 1 1h2c.55 0 1-.45 1-1v-6s3.72-4.8 5.74-7.39c.51-.66.04-1.61-.79-1.61H5.04c-.83 0-1.3.95-.79 1.61z"/>
-            </svg>
+            <Filter size={20} />
             Filters
-            {showFilters && <span className="filter-indicator">×</span>}
+            {showFilters && <span className="filter-indicator"><X size={12} /></span>}
           </button>
         </div>
 
@@ -374,7 +371,7 @@ const CustomerSearch = () => {
       {error && (
         <div className="error-message">
           <p>{error}</p>
-          <button onClick={() => setError('')} className="error-close">×</button>
+          <button onClick={() => setError('')} className="error-close"><X size={16} /></button>
         </div>
       )}
 
@@ -402,7 +399,7 @@ const CustomerSearch = () => {
       <div className="listings-section">
         {currentItems.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-icon">🔍</div>
+            <div className="empty-icon"><Search size={48} /></div>
             <h3>No services found</h3>
             <p>
               {searchQuery || Object.values(filters).some(f => f) 

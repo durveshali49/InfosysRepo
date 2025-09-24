@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { BarChart3, Search, Zap, Sparkles, Rocket, Wrench } from "lucide-react";
 import "./Home.css";
 
 const Home = () => {
@@ -41,7 +42,7 @@ const Home = () => {
         <div className="home-header">
           <h1>Welcome, {user.username}!</h1>
           <p className="user-role">Role: {user.role}</p>
-          <p className="tagline">Find and book trusted local services instantly 🚀</p>
+          <p className="tagline">Find and book trusted local services instantly <Rocket size={16} /></p>
         </div>
 
         {/* Role-based navigation */}
@@ -54,13 +55,13 @@ const Home = () => {
                   className="nav-btn primary"
                   onClick={() => handleNavigation("/provider-dashboard")}
                 >
-                  📊 Manage Listings
+                  <BarChart3 size={16} /> Manage Listings
                 </button>
                 <button 
                   className="nav-btn secondary"
                   onClick={() => handleNavigation("/customer-search")}
                 >
-                  🔍 Browse Services
+                  <Search size={16} /> Browse Services
                 </button>
               </div>
             </div>
@@ -72,7 +73,7 @@ const Home = () => {
                   className="nav-btn primary"
                   onClick={() => handleNavigation("/customer-search")}
                 >
-                  🔍 Find Services
+                  <Search size={16} /> Find Services
                 </button>
               </div>
             </div>
@@ -84,21 +85,21 @@ const Home = () => {
           <h3>Popular Services</h3>
           <div className="service-cards">
             <div className="card">
-              <h4>🔧 Plumber</h4>
+              <h4><Wrench size={16} /> Plumber</h4>
               <p>Quick fixes for leaks, taps & pipelines</p>
               <button onClick={() => handleNavigation("/customer-search")}>
                 Browse
               </button>
             </div>
             <div className="card">
-              <h4>⚡ Electrician</h4>
+              <h4><Zap size={16} /> Electrician</h4>
               <p>Fix electrical issues & installations safely</p>
               <button onClick={() => handleNavigation("/customer-search")}>
                 Browse
               </button>
             </div>
             <div className="card">
-              <h4>🧹 Cleaning</h4>
+              <h4><Sparkles size={16} /> Cleaning</h4>
               <p>Deep cleaning for home & office spaces</p>
               <button onClick={() => handleNavigation("/customer-search")}>
                 Browse
