@@ -34,7 +34,10 @@
 }
 
 .nav-logo {
-  font-size: 1.5rem;
+  height: 32px;
+  width: auto;
+  margin-right: 0.75rem;
+  vertical-align: middle;
 }
 
 .nav-title {
@@ -209,7 +212,7 @@
 }
 
 .error-message::before {
-  content: '⚠️';
+  content: '❌';
   font-size: 1.25rem;
   margin-right: 0.75rem;
 }

@@ -206,7 +206,7 @@ const ProviderDashboard = () => {
       <nav className="dashboard-nav">
         <div className="nav-content">
           <div className="nav-brand">
-            <span className="nav-logo"><Home size={20} /></span>
+            <img src="/local-services-logo.svg" alt="Local Services" className="nav-logo" />
             <span className="nav-title">Local Services</span>
           </div>
           <div className="nav-actions">

@@ -329,7 +329,7 @@
 }
 
 .field-error::before {
-  content: '⚠️';
+  content: '❌';
   font-size: 0.9em;
 }
 
@@ -620,7 +620,7 @@
 }
 
 .form-error::before {
-  content: '⚠️';
+  content: '❌';
   font-size: 1.2em;
   margin-right: 0.5rem;
 }
