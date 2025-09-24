@@ -90,19 +90,18 @@
   gap: 1.5rem;
 }
 
-/* Header Section */
+/* Header Section - Modern clean design without card background */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem 2rem;
-  background: #ffffff;
+  padding: 2rem 0 1.5rem 0;
+  background: transparent;
   color: #000000;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e5e7eb;
   position: relative;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 1.5rem;
 }
 
 .header-content {
@@ -111,42 +110,48 @@
 }
 
 .header-content h1 {
-  margin: 0 0 0.25rem 0;
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #000000;
-  line-height: 1.4;
+  margin: 0 0 0.5rem 0;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1f2937;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
 }
 
 .header-content p {
   margin: 0;
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: #6b7280;
   font-weight: 400;
-  max-width: 400px;
-  line-height: 1.4;
+  max-width: 500px;
+  line-height: 1.5;
 }
 
 .create-btn {
   background: #2563eb;
   color: #ffffff;
   border: none;
-  padding: 0.625rem 1.25rem;
-  border-radius: 8px;
-  font-size: 0.875rem;
-  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   white-space: nowrap;
   z-index: 1;
   position: relative;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+  width: auto;
+  flex-shrink: 0;
 }
 
 .create-btn:hover:not(:disabled) {
   background: #1d4ed8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .create-btn:disabled {
@@ -244,6 +249,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
   overflow: hidden;
+  margin-top: 1.5rem;
 }
 
 .form-header {
@@ -295,6 +301,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid #e5e7eb;
   overflow: hidden;
+  margin-top: 1.5rem;
 }
 
 .section-header {
@@ -441,19 +448,21 @@
 
   /* Mobile Header */
   .dashboard-header {
-    padding: 1.5rem;
+    padding: 1.5rem 0;
     text-align: center;
     flex-direction: column;
+    align-items: center;
     gap: 1.5rem;
   }
 
-  .dashboard-header h1 {
-    font-size: 1.75rem;
+  .header-content h1 {
+    font-size: 2rem;
     margin-bottom: 0.5rem;
   }
 
-  .dashboard-header p {
+  .header-content p {
     font-size: 0.95rem;
+    text-align: center;
   }
 
   /* Mobile Navigation */
@@ -540,6 +549,13 @@
     font-size: 1rem;
   }
 
+  /* Override for create button - keep it compact even on mobile */
+  .create-btn.btn-primary {
+    width: auto;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+  }
+
   /* Mobile Loading & Error */
   .loading-container {
     padding: 3rem 1.5rem;
@@ -566,11 +582,11 @@
   
   /* Extra Small Mobile */
   .dashboard-header {
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 0;
   }
 
-  .dashboard-header h1 {
-    font-size: 2rem;
+  .header-content h1 {
+    font-size: 1.75rem;
   }
 
   .nav-content {
