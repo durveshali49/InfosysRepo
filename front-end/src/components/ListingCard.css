@@ -18,7 +18,7 @@
 .listing-card:hover {
   transform: scale(1.02);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  border-color: var(--primary-teal);
+  border-color: var(--primary-accent);
 }
 
 /* Image Section */
@@ -43,7 +43,7 @@
 .placeholder-image {
   width: 100%;
   height: 100%;
-  background: var(--primary-teal);
+  background: var(--primary-accent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -60,7 +60,7 @@
   position: absolute;
   top: 12px;
   left: 12px;
-  background: var(--primary-teal);
+  background: var(--primary-accent);
   color: #ffffff;
   padding: 0.375rem 0.75rem;
   border-radius: 20px;
@@ -98,7 +98,7 @@
 }
 
 .listing-price {
-  color: var(--secondary-orange);
+  color: var(--secondary-accent);
   font-size: 1.125rem;
   font-weight: 700;
   white-space: nowrap;
@@ -138,7 +138,7 @@
 .toggle-description {
   background: none;
   border: none;
-  color: #3b82f6;
+  color: #000000;
   cursor: pointer;
   font-weight: 500;
   padding: 0;
@@ -147,7 +147,7 @@
 }
 
 .toggle-description:hover {
-  color: #1d4ed8;
+  color: #1a1a1a;
 }
 
 /* Availability */
@@ -161,11 +161,11 @@
   padding: 0.5rem 0.75rem;
   background: #f9fafb;
   border-radius: 6px;
-  border-left: 3px solid #3b82f6;
+  border-left: 3px solid #000000;
 }
 
 .listing-availability svg {
-  color: #3b82f6;
+  color: #000000;
   flex-shrink: 0;
 }
 
@@ -186,7 +186,7 @@
 }
 
 .provider-name {
-  color: #1e40af;
+  color: #1a1a1a;
   font-weight: 600;
 }
 
@@ -237,22 +237,22 @@
 }
 
 .btn-edit {
-  background: #2563eb;
+  background: #000000;
   color: #ffffff;
 }
 
 .btn-edit:hover {
-  background: #1d4ed8;
+  background: #1a1a1a;
   transform: translateY(-1px);
 }
 
 .btn-delete {
-  background: #ef4444;
+  background: #333333;
   color: #ffffff;
 }
 
 .btn-delete:hover {
-  background: #dc2626;
+  background: #333333;
   transform: translateY(-1px);
 }
 
@@ -268,7 +268,7 @@
   gap: 0.5rem;
   width: 100%;
   padding: 0.75rem 1rem;
-  background: #2563eb;
+  background: #000000;
   color: #ffffff;
   border: none;
   border-radius: 8px;
@@ -280,7 +280,7 @@
 }
 
 .btn-contact:hover {
-  background: #1d4ed8;
+  background: #1a1a1a;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
 }
@@ -391,8 +391,8 @@
 }
 
 .star-filled {
-  color: var(--secondary-orange);
-  fill: var(--secondary-orange);
+  color: var(--secondary-accent);
+  fill: var(--secondary-accent);
 }
 
 .star-empty {
@@ -413,7 +413,7 @@
 }
 
 .btn-book-now {
-  background: var(--primary-teal);
+  background: var(--primary-accent);
   color: #ffffff;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -428,7 +428,7 @@
 }
 
 .btn-book-now:hover {
-  background: var(--primary-teal-dark);
+  background: var(--primary-accent-hover);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 163, 140, 0.3);
 }
@@ -449,8 +449,8 @@
 }
 
 .btn-contact-secondary:hover {
-  border-color: var(--primary-teal);
-  color: var(--primary-teal);
+  border-color: var(--primary-accent);
+  color: var(--primary-accent);
   transform: translateY(-1px);
 }
 
@@ -461,7 +461,7 @@
 .btn-book-now:focus-visible,
 .btn-contact-secondary:focus-visible,
 .toggle-description:focus-visible {
-  outline: 2px solid var(--primary-teal);
+  outline: 2px solid var(--primary-accent);
   outline-offset: 2px;
 }
 
@@ -476,6 +476,6 @@
   }
   
   .listing-price {
-    border: 1px solid var(--secondary-orange);
+    border: 1px solid var(--secondary-accent);
   }
 }

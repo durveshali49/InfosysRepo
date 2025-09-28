@@ -52,13 +52,13 @@
 }
 
 .form-box input:focus {
-  border-color: #2563eb;
+  border-color: #000000;
   outline: none;
   box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
 .form-box button {
-  background: #2563eb;
+  background: #000000;
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -73,7 +73,7 @@
 }
 
 .form-box button:hover {
-  background: #1d4ed8;
+  background: #1a1a1a;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
@@ -108,15 +108,15 @@
 }
 
 .role-buttons button:hover {
-  border-color: #2563eb;
+  border-color: #000000;
   color: #000000;
   background: #F8FAFC;
   box-shadow: 0 3px 8px rgba(37, 99, 235, 0.12);
 }
 
 .role-buttons button.active {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: #000000;
+  border-color: #000000;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
   transform: scale(1.02);
@@ -129,7 +129,7 @@
   right: 8px;
   width: 8px;
   height: 8px;
-  background: #22C55E;
+  background: #333333;
   border-radius: 50%;
   border: 2px solid #ffffff;
   animation: pulse 0.6s ease-out;
@@ -152,12 +152,12 @@
 
 .role-buttons button:focus {
   outline: none;
-  border-color: #2563eb;
+  border-color: #000000;
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .error {
-  color: #dc2626;
+  color: #333333;
   font-size: 0.95em;
   margin-top: -10px;
   margin-bottom: 8px;
