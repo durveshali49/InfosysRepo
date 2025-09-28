@@ -63,11 +63,19 @@ const CustomerSearch = () => {
 
       const data = await response.json();
 
-      if (data.success) {
-        setListings(data.listings);
-        setFilteredListings(data.listings);
+      if (data.success && data.data && data.data.listings) {
+        setListings(data.data.listings);
+        setFilteredListings(data.data.listings);
+        setError('');
       } else {
-        setError(data.message || 'Failed to fetch listings');
+        // If no data but API is successful, show empty state
+        if (data.success && (!data.data || !data.data.listings || data.data.listings.length === 0)) {
+          setListings([]);
+          setFilteredListings([]);
+          setError('');
+        } else {
+          setError(data.message || 'Failed to fetch listings');
+        }
       }
     } catch (err) {
       console.error('Fetch listings error:', err);
@@ -243,7 +251,7 @@ const CustomerSearch = () => {
                 className="nav-btn logout"
                 onClick={handleLogout}
               >
-                � Logout
+                <X size={16} /> Logout
               </button>
             )}
           </div>
@@ -395,36 +403,110 @@ const CustomerSearch = () => {
         )}
       </div>
 
-      {/* Listings Grid */}
-      <div className="listings-section">
-        {currentItems.length === 0 ? (
-          <div className="empty-state">
-            <div className="empty-icon"><Search size={48} /></div>
-            <h3>No services found</h3>
-            <p>
-              {searchQuery || Object.values(filters).some(f => f) 
-                ? 'Try adjusting your search criteria or filters.'
-                : 'No services are available at the moment.'
-              }
-            </p>
-            {(searchQuery || Object.values(filters).some(f => f)) && (
-              <button className="btn-primary" onClick={clearFilters}>
-                Clear Filters
-              </button>
-            )}
+      {/* Two-Column Layout */}
+      <div className="search-results-container">
+        {/* Left Sidebar - Filters */}
+        <div className="filters-sidebar">
+          <h3>Refine Search</h3>
+          
+          {/* Category Filter */}
+          <div className="filter-group">
+            <label>Category</label>
+            <select
+              value={filters.category}
+              onChange={(e) => handleFilterChange('category', e.target.value)}
+            >
+              {categories.map(cat => (
+                <option key={cat} value={cat === 'All Categories' ? '' : cat}>
+                  {cat}
+                </option>
+              ))}
+            </select>
           </div>
-        ) : (
-          <div className="listings-grid">
-            {currentItems.map((listing) => (
-              <ListingCard
-                key={listing.listing_id}
-                listing={listing}
-                onContact={() => handleContactProvider(listing)}
-                isOwner={false}
-              />
-            ))}
+
+          {/* Location Filters */}
+          <div className="filter-group">
+            <label>City</label>
+            <input
+              type="text"
+              placeholder="Enter city name"
+              value={filters.location_city}
+              onChange={(e) => handleFilterChange('location_city', e.target.value)}
+            />
           </div>
-        )}
+
+          <div className="filter-group">
+            <label>ZIP Code</label>
+            <input
+              type="text"
+              placeholder="Enter ZIP code"
+              value={filters.location_zip}
+              onChange={(e) => handleFilterChange('location_zip', e.target.value)}
+            />
+          </div>
+
+          {/* Price Filters */}
+          <div className="filter-group">
+            <label>Min Price (₹)</label>
+            <input
+              type="number"
+              placeholder="0"
+              min="0"
+              step="1"
+              value={filters.min_price}
+              onChange={(e) => handleFilterChange('min_price', e.target.value)}
+            />
+          </div>
+
+          <div className="filter-group">
+            <label>Max Price (₹)</label>
+            <input
+              type="number"
+              placeholder="10000"
+              min="0"
+              step="1"
+              value={filters.max_price}
+              onChange={(e) => handleFilterChange('max_price', e.target.value)}
+            />
+          </div>
+
+          {/* Clear Filters */}
+          <button className="btn-clear" onClick={clearFilters}>
+            Clear All Filters
+          </button>
+        </div>
+
+        {/* Right Column - Service Listings */}
+        <div className="listings-section">
+          {currentItems.length === 0 ? (
+            <div className="empty-state">
+              <div className="empty-icon"><Search size={48} /></div>
+              <h3>No services found</h3>
+              <p>
+                {searchQuery || Object.values(filters).some(f => f) 
+                  ? 'Try adjusting your search criteria or filters.'
+                  : 'No services are available at the moment.'
+                }
+              </p>
+              {(searchQuery || Object.values(filters).some(f => f)) && (
+                <button className="btn-primary" onClick={clearFilters}>
+                  Clear Filters
+                </button>
+              )}
+            </div>
+          ) : (
+            <div className="listings-grid">
+              {currentItems.map((listing) => (
+                <ListingCard
+                  key={listing.listing_id}
+                  listing={listing}
+                  onContact={() => handleContactProvider(listing)}
+                  isOwner={false}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Pagination */}

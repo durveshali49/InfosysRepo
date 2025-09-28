@@ -1,6 +1,19 @@
-# Getting Started with Create React App
+# Local Services Finder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A modern React-based platform for finding and booking local services. Connect customers with trusted service providers in their area.
+
+## Features
+
+- **Customer Search**: Find local services by category, location, and price
+- **Provider Dashboard**: Service providers can create and manage their listings
+- **Authentication**: Secure login for both customers and service providers
+- **Clean UI**: Modern, responsive design using Lucide React icons
+
+## Tech Stack
+
+- **Frontend**: React 19, React Router, Lucide React
+- **Backend**: Node.js, Express.js, MySQL
+- **Styling**: Pure CSS with modern design patterns
 
 ## Available Scripts
 

@@ -1,24 +1,42 @@
 import express from "express";
 import cors from "cors";
 import bcrypt from "bcrypt";
+import { createServer } from "http";
+import { Server } from "socket.io";
 import pool from "./Service.js";
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"]
+  }
+});
 
 // Middleware
 app.use(cors());
 app.use(express.json());
 
+// Socket.IO connection handling
+io.on('connection', (socket) => {
+  console.log(`[SOCKET] Client connected: ${socket.id}`);
+  
+  socket.on('disconnect', () => {
+    console.log(`[SOCKET] Client disconnected: ${socket.id}`);
+  });
+});
+
 // Test database connection (optional - won't crash if DB is down)
 (async () => {
   try {
     const connection = await pool.getConnection();
-    console.log("✅ Database connected successfully!");
+    console.log("[SUCCESS] Database connected successfully!");
     connection.release();
   } catch (err) {
-    console.log("⚠️  Database connection failed:", err.message);
-    console.log("🔧 Server will run without database connection");
+    console.log("[WARNING] Database connection failed:", err.message);
+    console.log("[INFO] Server will run without database connection");
   }
 })();
 
@@ -285,6 +303,28 @@ app.post("/api/listings", verifyAuth, verifyProvider, validateListingInput, asyn
        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
       [provider_id, service_name, description, category, price, availabilityData, location_city, location_zip, image_url]
     );
+
+    // Get the complete listing with provider info for real-time broadcast
+    const [newListing] = await pool.execute(
+      `SELECT 
+        sl.listing_id, sl.service_name, sl.description, sl.category, sl.price, 
+        sl.availability, sl.location_city, sl.location_zip, sl.image_url, 
+        sl.created_at, u.username as provider_name
+       FROM service_listings sl
+       JOIN users u ON sl.provider_id = u.id
+       WHERE sl.listing_id = ?`,
+      [result.insertId]
+    );
+
+    // Broadcast new listing to all connected clients
+    if (newListing.length > 0) {
+      io.emit('new_service_listing', {
+        ...newListing[0],
+        rating_average: 4.5, // Placeholder
+        rating_count: 0      // New service
+      });
+      console.log(`[SOCKET] New listing broadcasted: ${newListing[0].service_name}`);
+    }
 
     res.status(201).json({
       success: true,
@@ -634,9 +674,94 @@ app.get("/api/listings/search", async (req, res) => {
   }
 });
 
+/**
+ * SEED DATA ENDPOINT - Add sample services for demonstration
+ * POST /api/seed-services
+ */
+app.post("/api/seed-services", async (req, res) => {
+  try {
+    // Sample services data
+    const sampleServices = [
+      {
+        provider_id: 1, // Assumes a provider exists with ID 1
+        service_name: "Professional House Cleaning",
+        description: "Deep cleaning service for your home. We clean every corner with eco-friendly products and attention to detail.",
+        category: "Cleaning",
+        price: 85.00,
+        availability: JSON.stringify({
+          days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          hours: { start: "08:00", end: "17:00" }
+        }),
+        location_city: "New York",
+        location_zip: "10001",
+        image_url: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400"
+      },
+      {
+        provider_id: 1, // Assumes a provider exists with ID 1  
+        service_name: "Emergency Plumbing Services",
+        description: "24/7 emergency plumbing repairs including leak fixes, pipe installation, and drain cleaning by licensed professionals.",
+        category: "Plumbing",
+        price: 120.00,
+        availability: JSON.stringify({
+          days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+          hours: { start: "00:00", end: "23:59" }
+        }),
+        location_city: "New York", 
+        location_zip: "10002",
+        image_url: "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=400"
+      }
+    ];
+
+    // Insert sample services
+    for (const service of sampleServices) {
+      const [result] = await pool.execute(
+        `INSERT INTO service_listings 
+         (provider_id, service_name, description, category, price, availability, location_city, location_zip, image_url) 
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        [service.provider_id, service.service_name, service.description, service.category, 
+         service.price, service.availability, service.location_city, service.location_zip, service.image_url]
+      );
+
+      // Get the complete listing with provider info for broadcasting
+      const [newListing] = await pool.execute(
+        `SELECT 
+          sl.listing_id, sl.service_name, sl.description, sl.category, sl.price, 
+          sl.availability, sl.location_city, sl.location_zip, sl.image_url, 
+          sl.created_at, u.username as provider_name
+         FROM service_listings sl
+         JOIN users u ON sl.provider_id = u.id
+         WHERE sl.listing_id = ?`,
+        [result.insertId]
+      );
+
+      // Broadcast each new listing
+      if (newListing.length > 0) {
+        io.emit('new_service_listing', {
+          ...newListing[0],
+          rating_average: 4.5,
+          rating_count: Math.floor(Math.random() * 50) + 10
+        });
+      }
+    }
+
+    res.json({
+      success: true,
+      message: `${sampleServices.length} sample services added successfully`
+    });
+
+  } catch (error) {
+    console.error("Seed services error:", error);
+    res.status(500).json({ 
+      success: false, 
+      message: "Failed to seed services" 
+    });
+  }
+});
+
 // Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
-  console.log(`📋 Health check: http://localhost:${PORT}/health`);
-  console.log(`🌐 API endpoint: http://localhost:${PORT}/`);
+httpServer.listen(PORT, () => {
+  console.log(`[SERVER] Running on http://localhost:${PORT}`);
+  console.log(`[HEALTH] Check: http://localhost:${PORT}/health`);
+  console.log(`[API] Endpoint: http://localhost:${PORT}/`);
+  console.log(`[SOCKET] WebSocket server ready`);
 });

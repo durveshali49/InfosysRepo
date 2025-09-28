@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { MapPin, Clock, Edit, Trash2, Phone } from 'lucide-react';
+import { MapPin, Clock, Edit, Trash2, Phone, Star } from 'lucide-react';
 import './ListingCard.css';
 
 const ListingCard = ({ 
@@ -19,11 +19,11 @@ const ListingCard = ({
   const [showFullDescription, setShowFullDescription] = useState(false);
 
   /**
-   * Format price display
+   * Format price display with Indian Rupee symbol
    */
   const formatPrice = (price) => {
     const numPrice = parseFloat(price);
-    return numPrice ? `$${numPrice.toFixed(2)}` : 'Price on request';
+    return numPrice ? `₹${numPrice.toFixed(0)}` : 'Price on request';
   };
 
   /**
@@ -180,24 +180,37 @@ const ListingCard = ({
           {formatAvailability(listing.availability)}
         </div>
 
-        {/* Provider Info */}
-        {listing.provider_name && (
-          <div className="provider-info">
-            <span className="provider-label">Provider:</span>
-            <span className="provider-name">{listing.provider_name}</span>
+        {/* Provider Info & Rating */}
+        <div className="provider-section">
+          {listing.provider_name && (
+            <div className="provider-info">
+              <span className="provider-label">Provider:</span>
+              <span className="provider-name">{listing.provider_name}</span>
+            </div>
+          )}
+          
+          {/* Rating Display */}
+          <div className="rating-display">
+            <div className="stars">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <Star 
+                  key={star} 
+                  size={16} 
+                  className={star <= (listing.rating_average || 4.5) ? 'star-filled' : 'star-empty'}
+                />
+              ))}
+            </div>
+            <span className="rating-text">
+              {(listing.rating_average || 4.5).toFixed(1)} ({listing.rating_count || 23} reviews)
+            </span>
           </div>
-        )}
+        </div>
 
         {/* Timestamps */}
         <div className="listing-meta">
           <span className="meta-item">
             Listed {new Date(listing.created_at).toLocaleDateString()}
           </span>
-          {listing.updated_at !== listing.created_at && (
-            <span className="meta-item">
-              Updated {new Date(listing.updated_at).toLocaleDateString()}
-            </span>
-          )}
         </div>
       </div>
 
@@ -228,11 +241,17 @@ const ListingCard = ({
             // Customer actions
             <div className="customer-actions">
               <button 
-                className="btn-contact"
+                className="btn-book-now"
+                onClick={() => onContact(listing)}
+              >
+                Book Now
+              </button>
+              <button 
+                className="btn-contact-secondary"
                 onClick={() => onContact(listing)}
               >
                 <Phone size={16} />
-                Contact Provider
+                Contact
               </button>
             </div>
           )}

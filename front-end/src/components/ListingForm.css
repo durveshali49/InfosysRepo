@@ -620,9 +620,10 @@
 }
 
 .form-error::before {
-  content: '❌';
-  font-size: 1.2em;
+  content: '[ERROR]';
+  font-size: 1em;
   margin-right: 0.5rem;
+  font-weight: bold;
 }
 
 /* Success State */
@@ -639,9 +640,10 @@
 }
 
 .form-success::before {
-  content: '✅';
-  font-size: 1.2em;
+  content: '[SUCCESS]';
+  font-size: 1em;
   margin-right: 0.5rem;
+  font-weight: bold;
 }
 
 /* Loading State */

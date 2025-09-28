@@ -211,7 +211,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: #3b82f6;
+  background: var(--primary-teal);
   color: #ffffff;
   border: none;
   padding: 1rem 1.5rem;
@@ -225,9 +225,9 @@
 }
 
 .filter-toggle:hover {
-  background: #1d4ed8;
+  background: var(--primary-teal-dark);
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 163, 140, 0.3);
 }
 
 .filter-indicator {
@@ -403,15 +403,42 @@
   transform: translateY(-1px);
 }
 
-/* Listings Grid */
-.listings-section {
+/* Two-Column Layout */
+.search-results-container {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
   margin-bottom: 3rem;
+}
+
+/* Left Sidebar - Filters */
+.filters-sidebar {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem;
+  height: fit-content;
+  position: sticky;
+  top: 100px;
+}
+
+.filters-sidebar h3 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #333333;
+}
+
+/* Right Column - Listings */
+.listings-section {
+  min-height: 400px;
 }
 
 .listings-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
 }
 
 /* Empty State */
@@ -447,7 +474,7 @@
 }
 
 .btn-primary {
-  background: #2563eb;
+  background: var(--primary-teal);
   color: #ffffff;
   border: none;
   padding: 1rem 2rem;
@@ -456,13 +483,13 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
+  box-shadow: 0 4px 16px rgba(0, 163, 140, 0.3);
 }
 
 .btn-primary:hover {
-  background: #1d4ed8;
+  background: var(--primary-teal-dark);
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 8px 25px rgba(0, 163, 140, 0.4);
 }
 
 /* Pagination */
@@ -580,8 +607,19 @@
     justify-content: center;
   }
   
-  .filters-grid {
+  /* Stack two-column layout on mobile */
+  .search-results-container {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .filters-sidebar {
+    position: static;
+    order: -1;
+  }
+  
+  .filters-sidebar .filter-group {
+    margin-bottom: 1rem;
   }
   
   .listings-grid {
