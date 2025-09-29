@@ -10,14 +10,12 @@ const DB_CONFIG = {
   host: process.env.DB_HOST || "localhost",
   port: process.env.DB_PORT || 3306,
   user: process.env.DB_USER || "root", 
-  password: process.env.DB_PASSWORD || "AZaz09$$",
+  password: process.env.DB_PASSWORD || "AZaz09$$", // Your original password
   database: process.env.DB_NAME || "infosys",
   waitForConnections: true,
   connectionLimit: process.env.DB_CONNECTION_LIMIT || 10,
   queueLimit: 0,
-  // Additional pool options for production
-  acquireTimeout: 60000,
-  timeout: 60000,
+  // Removed invalid options: acquireTimeout and timeout
 };
 
 /**
@@ -32,10 +30,28 @@ export const testConnection = async () => {
   try {
     const connection = await pool.getConnection();
     console.log("[SUCCESS] Database connected successfully!");
+    
+    // Test a simple query to verify database access
+    const [rows] = await connection.execute('SELECT 1 as test');
+    console.log("[INFO] Database query test successful");
+    
     connection.release();
     return true;
   } catch (error) {
-    console.log("[WARNING] Database connection failed:", error.message);
+    console.log("[ERROR] Database connection failed:", error.message);
+    console.log("[ERROR] Error code:", error.code);
+    
+    if (error.code === 'ER_ACCESS_DENIED_ERROR') {
+      console.log("[HELP] Authentication failed. Please check:");
+      console.log("[HELP] 1. Username and password in database.js");
+      console.log("[HELP] 2. MySQL user permissions");
+      console.log("[HELP] 3. Current config - User: '" + DB_CONFIG.user + "', Host: '" + DB_CONFIG.host + "'");
+    } else if (error.code === 'ECONNREFUSED') {
+      console.log("[HELP] Connection refused. Please check:");
+      console.log("[HELP] 1. MySQL server is running");
+      console.log("[HELP] 2. Host and port are correct");
+    }
+    
     console.log("[INFO] Server will run without database connection");
     return false;
   }

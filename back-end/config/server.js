@@ -9,9 +9,14 @@ export const SERVER_CONFIG = {
   
   // CORS settings
   CORS: {
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: [
+      process.env.FRONTEND_URL || "http://localhost:3000",
+      "http://localhost:3001", // Allow frontend on port 3001 as well
+      "http://localhost:3000"  // Allow frontend on port 3000
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization", "x-user-id"],
   },
   
   // Security settings

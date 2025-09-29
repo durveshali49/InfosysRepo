@@ -2,6 +2,10 @@ import express from "express";
 import cors from "cors";
 import { createServer } from "http";
 import { Server } from "socket.io";
+import dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
 
 // Configuration imports
 import SERVER_CONFIG from "./config/server.js";
