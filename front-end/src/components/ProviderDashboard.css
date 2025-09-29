@@ -74,12 +74,12 @@
 }
 
 .nav-btn.logout {
-  background: #333333;
+  background: #000000;
   color: #ffffff;
 }
 
 .nav-btn.logout:hover {
-  background: #333333;
+  background: #1a1a1a;
   transform: translateY(-1px);
 }
 
@@ -323,10 +323,12 @@
 /* Listings Grid */
 .listings-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 1.5rem;
-  padding: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 2rem;
   background: #ffffff;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 /* Empty State */
@@ -419,9 +421,9 @@
   }
 
   .listings-grid {
-    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-    gap: 2rem;
-    padding: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    padding: 1.5rem;
   }
 }
 
@@ -431,7 +433,7 @@
   }
   
   .listings-grid {
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     padding: 1.5rem;
   }

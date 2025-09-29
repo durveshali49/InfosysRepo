@@ -1125,13 +1125,13 @@ body {
   background: linear-gradient(135deg, #f8f8f8, #fafafa);
 }
 
-/* Teal Accent for Icons */
+/* Monochromatic Accent for Icons */
 .trust-feature-icon svg,
 .category-icon svg {
   color: var(--primary-accent);
 }
 
-/* Teal to Orange Gradient Buttons */
+/* Black to Gray Gradient Buttons */
 .cta-button,
 .book-btn {
   background: linear-gradient(135deg, var(--primary-accent), var(--secondary-accent));
@@ -1150,13 +1150,13 @@ body {
   font-weight: bold;
 }
 
-/* Footer with Teal Theme */
+/* Footer with Monochromatic Theme */
 .footer {
   background: linear-gradient(135deg, #333333, #000000);
 }
 
 /* === CATEGORY-FIRST LAYOUT POLICIES === */
-/* Ensure no teal/orange colors in header area - only dark gray/black */
+/* Ensure monochromatic colors in header area - only dark gray/black */
 .consolidated-header * {
   color: var(--gray-dark);
 }
@@ -1178,7 +1178,7 @@ body {
   margin-bottom: 1.5rem;
 }
 
-/* Category cards with teal/orange accents only in body */
+/* Category cards with monochromatic accents only in body */
 .category-card-main .popular-badge {
   background: var(--primary-accent);
 }
