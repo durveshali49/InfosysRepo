@@ -411,7 +411,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 1200px) {
+@media (max-width: 1100px) {
   .dashboard-container {
     max-width: 95%;
   }
@@ -427,7 +427,7 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
   .provider-dashboard {
     padding: 1.5rem;
   }

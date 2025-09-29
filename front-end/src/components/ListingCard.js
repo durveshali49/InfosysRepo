@@ -85,21 +85,21 @@ const ListingCard = ({
   };
 
   /**
-   * Get category color
+   * Get category color - Monochromatic theme
    */
   const getCategoryColor = (category) => {
     const colors = {
-      'Plumbing': '#3b82f6',
-      'Electrical': '#f59e0b',
-      'Cleaning': '#10b981',
-      'Carpentry': '#8b5cf6',
-      'Painting': '#ef4444',
-      'Gardening': '#22c55e',
-      'Moving': '#f97316',
-      'Tutoring': '#6366f1',
-      'Pet Care': '#ec4899',
-      'Beauty': '#14b8a6',
-      'Other': '#6b7280'
+      'Plumbing': '#000000',
+      'Electrical': '#333333',
+      'Cleaning': '#000000',
+      'Carpentry': '#333333',
+      'Painting': '#000000',
+      'Gardening': '#333333',
+      'Moving': '#000000',
+      'Tutoring': '#333333',
+      'Pet Care': '#000000',
+      'Beauty': '#333333',
+      'Other': '#757575'
     };
     return colors[category] || colors['Other'];
   };
