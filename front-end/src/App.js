@@ -1,14 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import Signup from "./Signup";
-import Login from "./Login";
-import Home from "./Home";
-import ProviderDashboard from "./components/ProviderDashboard";
-import CustomerSearch from "./components/CustomerSearch";
+import { Signup, Login } from "./pages/Auth";
+import Landing from "./pages/Landing";
+import ProviderDashboard from "./pages/ProviderDashboard";
+import CustomerSearch from "./pages/CustomerSearch";
 import "./App.css";
-import "./Landing.css";
 
-const Landing = () => {
+const LandingIntro = () => {
   return (
     <div className="form-container">
       <div className="form-box landing-card">
@@ -31,10 +29,10 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Landing />} />
+        <Route path="/" element={<LandingIntro />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/home" element={<Home />} />
+        <Route path="/home" element={<Landing />} />
         <Route path="/provider-dashboard" element={<ProviderDashboard />} />
         <Route path="/customer-search" element={<CustomerSearch />} />
       </Routes>

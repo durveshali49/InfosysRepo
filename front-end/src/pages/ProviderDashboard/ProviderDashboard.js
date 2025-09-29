@@ -6,8 +6,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Home, Search, X, Plus, Clipboard } from 'lucide-react';
-import ListingForm from './ListingForm';
-import ListingCard from './ListingCard';
+import ListingForm from '../../components/ListingForm';
+import ListingCard from '../../components/ListingCard';
 import './ProviderDashboard.css';
 
 const ProviderDashboard = () => {

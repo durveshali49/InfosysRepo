@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Home, Search, Filter, X, BarChart3 } from 'lucide-react';
-import ListingCard from './ListingCard';
+import ListingCard from '../../components/ListingCard';
 import './CustomerSearch.css';
 
 const CustomerSearch = () => {

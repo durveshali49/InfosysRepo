@@ -1,9 +1,9 @@
 /**
  * Listings Controller
- * Handles all service listing operations (CRUD)
+ * Handles HTTP requests and delegates to ListingsService
  */
 
-import pool from '../config/database.js';
+import listingsService from '../services/listingsService.js';
 
 /**
  * Create new service listing
@@ -11,66 +11,45 @@ import pool from '../config/database.js';
  */
 export const createListing = async (req, res) => {
   try {
-    const { 
-      service_name, 
-      description, 
-      category, 
-      price, 
-      availability, 
-      location_city, 
-      location_zip, 
-      image_url 
-    } = req.body;
+    const listingData = req.body;
+    const providerId = req.user.id;
 
-    const provider_id = req.user.id;
-
-    // Parse availability JSON if provided
-    let availabilityData = null;
-    if (availability) {
-      try {
-        availabilityData = JSON.stringify(availability);
-      } catch (error) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid availability format"
-        });
-      }
+    // Validate input
+    if (!listingData.service_name || !listingData.category || !listingData.price) {
+      return res.status(400).json({
+        success: false,
+        message: "Service name, category, and price are required"
+      });
     }
 
-    // Insert listing into database
-    const [result] = await pool.execute(
-      `INSERT INTO service_listings 
-       (provider_id, service_name, description, category, price, availability, location_city, location_zip, image_url) 
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-      [provider_id, service_name, description, category, price, availabilityData, location_city, location_zip, image_url]
-    );
+    // Validate availability format
+    if (listingData.availability && !listingsService.validateAvailability(listingData.availability)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid availability format"
+      });
+    }
 
-    // Get the complete listing with provider info for real-time broadcast
-    const [newListing] = await pool.execute(
-      `SELECT 
-        sl.listing_id, sl.service_name, sl.description, sl.category, sl.price, 
-        sl.availability, sl.location_city, sl.location_zip, sl.image_url, 
-        sl.created_at, u.username as provider_name
-       FROM service_listings sl
-       JOIN users u ON sl.provider_id = u.id
-       WHERE sl.listing_id = ?`,
-      [result.insertId]
-    );
+    // Create listing using service
+    const newListing = await listingsService.createListing(listingData, providerId);
+
+    // Get complete listing with provider info for real-time broadcast
+    const listingWithProvider = await listingsService.getListingWithProvider(newListing.listingId);
 
     // Broadcast new listing to all connected clients via socket.io
-    if (newListing.length > 0 && req.io) {
+    if (listingWithProvider && req.io) {
       req.io.emit('new_service_listing', {
-        ...newListing[0],
+        ...listingWithProvider,
         rating_average: 4.5, // Placeholder
         rating_count: 0      // New service
       });
-      console.log(`[SOCKET] New listing broadcasted: ${newListing[0].service_name}`);
+      console.log(`[SOCKET] New listing broadcasted: ${listingWithProvider.service_name}`);
     }
 
     res.status(201).json({
       success: true,
       message: "Listing created successfully",
-      listing_id: result.insertId
+      listing_id: newListing.listingId
     });
 
   } catch (error) {
@@ -88,25 +67,17 @@ export const createListing = async (req, res) => {
  */
 export const getProviderListings = async (req, res) => {
   try {
-    const provider_id = parseInt(req.params.provider_id);
+    const providerId = parseInt(req.params.provider_id);
     
     // Verify the authenticated user can access these listings
-    if (req.user.id !== provider_id && req.user.role !== 'Admin') {
+    if (req.user.id !== providerId && req.user.role !== 'Admin') {
       return res.status(403).json({
         success: false,
         message: "Access denied"
       });
     }
 
-    const [listings] = await pool.execute(
-      `SELECT listing_id, service_name, description, category, price, 
-              availability, location_city, location_zip, image_url, 
-              created_at, updated_at
-       FROM service_listings 
-       WHERE provider_id = ? 
-       ORDER BY created_at DESC`,
-      [provider_id]
-    );
+    const listings = await listingsService.getProviderListings(providerId);
 
     res.json({
       success: true,
@@ -129,61 +100,37 @@ export const getProviderListings = async (req, res) => {
  */
 export const updateListing = async (req, res) => {
   try {
-    const listing_id = parseInt(req.params.id);
-    const provider_id = req.user.id;
+    const listingId = parseInt(req.params.id);
+    const providerId = req.user.id;
+    const updateData = req.body;
+
+    // Validate availability format if provided
+    if (updateData.availability && !listingsService.validateAvailability(updateData.availability)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid availability format"
+      });
+    }
 
     // Check if listing exists and belongs to the provider
-    const [existingListing] = await pool.execute(
-      "SELECT provider_id FROM service_listings WHERE listing_id = ?",
-      [listing_id]
-    );
+    const ownership = await listingsService.verifyListingOwnership(listingId, providerId);
 
-    if (existingListing.length === 0) {
+    if (!ownership.exists) {
       return res.status(404).json({
         success: false,
         message: "Listing not found"
       });
     }
 
-    if (existingListing[0].provider_id !== provider_id) {
+    if (!ownership.isOwner) {
       return res.status(403).json({
         success: false,
         message: "You can only edit your own listings"
       });
     }
 
-    const { 
-      service_name, 
-      description, 
-      category, 
-      price, 
-      availability, 
-      location_city, 
-      location_zip, 
-      image_url 
-    } = req.body;
-
-    // Parse availability JSON if provided
-    let availabilityData = null;
-    if (availability) {
-      try {
-        availabilityData = JSON.stringify(availability);
-      } catch (error) {
-        return res.status(400).json({
-          success: false,
-          message: "Invalid availability format"
-        });
-      }
-    }
-
-    // Update listing
-    await pool.execute(
-      `UPDATE service_listings 
-       SET service_name = ?, description = ?, category = ?, price = ?, 
-           availability = ?, location_city = ?, location_zip = ?, image_url = ? 
-       WHERE listing_id = ?`,
-      [service_name, description, category, price, availabilityData, location_city, location_zip, image_url, listing_id]
-    );
+    // Update listing using service
+    await listingsService.updateListing(listingId, updateData);
 
     res.json({
       success: true,

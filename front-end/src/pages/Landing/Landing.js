@@ -4,13 +4,13 @@ import {
   Search, MapPin, Star, User, Bell, ChevronDown, LogOut,
   Wrench, Zap, Sparkles, Home as HomeIcon, Paintbrush, 
   Scissors, Laptop, Phone, Mail, Facebook, Twitter, Instagram,
-  ArrowRight, Shield, Award, Users, Headphones, CheckCircle,
-  Clock, Target, IndianRupee, Car, Bug, Wind, Dumbbell, 
-  TreePine, Camera, Gamepad2, Stethoscope, GraduationCap,
-  TrendingUp, Gift, Filter, ShieldCheck, UserCheck, Tag, Repeat2
+  ArrowRight, Headphones, Clock, IndianRupee, Car, Bug, Wind, 
+  Dumbbell, TreePine, Camera, Gamepad2, Stethoscope, GraduationCap,
+  TrendingUp, Gift, ShieldCheck, Repeat2
 } from "lucide-react";
 import { io } from "socket.io-client";
 import "./Home.css";
+import "./Landing.css";
 
 const Home = () => {
   const navigate = useNavigate();

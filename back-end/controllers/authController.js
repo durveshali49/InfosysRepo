@@ -1,11 +1,9 @@
 /**
  * Authentication Controller
- * Handles user registration and login
+ * Handles HTTP requests and delegates to AuthService
  */
 
-import bcrypt from "bcrypt";
-import pool from '../config/database.js';
-import SERVER_CONFIG from '../config/server.js';
+import authService from '../services/authService.js';
 
 /**
  * User registration
@@ -15,32 +13,36 @@ export const signup = async (req, res) => {
   try {
     const { username, email, password, role } = req.body;
 
-    // Check if user already exists
-    const [existingUser] = await pool.execute(
-      "SELECT id FROM users WHERE email = ?",
-      [email]
-    );
+    // Validate input
+    if (!username || !email || !password || !role) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required"
+      });
+    }
 
-    if (existingUser.length > 0) {
+    // Check if user already exists
+    const userExists = await authService.userExistsByEmail(email);
+    if (userExists) {
       return res.status(400).json({ 
         success: false, 
         message: "User with this email already exists!" 
       });
     }
 
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, SERVER_CONFIG.BCRYPT_SALT_ROUNDS);
-
-    // Insert user into database
-    const [result] = await pool.execute(
-      "INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)",
-      [username, email, hashedPassword, role]
-    );
+    // Hash password and create user
+    const hashedPassword = await authService.hashPassword(password);
+    const newUser = await authService.createUser({
+      username,
+      email,
+      password: hashedPassword,
+      role
+    });
 
     res.status(201).json({
       success: true,
       message: "User registered successfully!",
-      userId: result.insertId
+      userId: newUser.userId
     });
 
   } catch (error) {
@@ -60,24 +62,25 @@ export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Find user in database by email OR username
-    const [users] = await pool.execute(
-      "SELECT id, username, email, password, role FROM users WHERE email = ? OR username = ?",
-      [email, email]
-    );
+    // Validate input
+    if (!email || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Email and password are required"
+      });
+    }
 
-    if (users.length === 0) {
+    // Find user by email or username
+    const user = await authService.findUserByIdentifier(email);
+    if (!user) {
       return res.status(401).json({ 
         success: false, 
         message: "Invalid email or password" 
       });
     }
 
-    const user = users[0];
-
-    // Compare password
-    const passwordMatch = await bcrypt.compare(password, user.password);
-
+    // Verify password
+    const passwordMatch = await authService.verifyPassword(password, user.password);
     if (!passwordMatch) {
       return res.status(401).json({ 
         success: false, 
@@ -85,13 +88,13 @@ export const login = async (req, res) => {
       });
     }
 
-    // Login successful - don't send password back
-    const { password: userPassword, ...userWithoutPassword } = user;
+    // Login successful - sanitize user data
+    const sanitizedUser = authService.sanitizeUser(user);
     
     res.json({
       success: true,
       message: "Login successful!",
-      user: userWithoutPassword
+      user: sanitizedUser
     });
 
   } catch (error) {
